@@ -22,6 +22,11 @@ inquirer.prompt([
         name: "id",
     },
     {
+        type: "input",
+        message: "Enter your employee's email.",
+        name: "email",
+    },
+    {
         type: "list",
         message: "Select the Employee's Proper Title",
         name: "role",
@@ -31,21 +36,54 @@ inquirer.prompt([
             "Intern",
         ]
     }
-])
+]).then(function (data) {
+    console.log(data);
+    const name = data.name;
+    const nameNoSpace = name.split(".").join(" ");
+    const id = data.id;
+    const email = data.email;
+    const role = data.role;
+    console.log(data.role);
+
+    if (role === "Intern") {
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "Enter the name of the School that the Intern Attends.",
+                name: "school",
+            }]).then(function (data) {
+                school = data.school;
+                emp = new Intern(name, id, email, school);
+                console.log(school);
+            });
+    }
+    if (role === "Manager") {
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "Enter the Manager's Office Number.",
+                name: "officeNum",
+            }]).then(function (data) {
+                officeNum = data.officeNum;
+                emp = new Manager(name, id, email, officeNum);
+                console.log(officeNum);
+            });
+    }
+    if (role === "Engineer") {
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "Enter a the Engineer's GitHub UserName.",
+                name: "gitHubName",
+            }]).then(function (data) {
+                gitHubName = data.gitHubName;
+                emp = new Engineer(name, id, email, gitHubName);
+                console.log(gitHubName);
+            });
+    }
+})
 
 
-
-Employee.getName(name);
-
-
-
-if role is Intern
-emp = new Intern
-if role is Manager
-emp = new Manager
-
-inquirer.prompt(Employee.employeeQuestions)
-emp.setSchool(Response.school)
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
