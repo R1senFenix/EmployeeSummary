@@ -10,82 +10,122 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-inquirer.prompt([
-    {
-        type: "input",
-        message: "Enter your Employee's name.",
-        name: "name",
-    },
-    {
-        type: "input",
-        message: "Enter the Employee's ID Number.",
-        name: "id",
-    },
-    {
-        type: "input",
-        message: "Enter your employee's email.",
-        name: "email",
-    },
-    {
-        type: "list",
-        message: "Select the Employee's Proper Title",
-        name: "role",
-        choices: [
-            "Manager",
-            "Engineer",
-            "Intern",
-        ]
-    }
-]).then(function (data) {
-    console.log(data);
-    const name = data.name;
-    const nameNoSpace = name.split(".").join(" ");
-    const id = data.id;
-    const email = data.email;
-    const role = data.role;
-    console.log(data.role);
+const teamArray = [];
 
-    if (role === "Intern") {
-        inquirer.prompt([
-            {
-                type: "input",
-                message: "Enter the name of the School that the Intern Attends.",
-                name: "school",
-            }]).then(function (data) {
-                school = data.school;
-                emp = new Intern(name, id, email, school);
-                console.log(school);
-            });
-    }
-    if (role === "Manager") {
-        inquirer.prompt([
-            {
-                type: "input",
-                message: "Enter the Manager's Office Number.",
-                name: "officeNum",
-            }]).then(function (data) {
-                officeNum = data.officeNum;
-                emp = new Manager(name, id, email, officeNum);
-                console.log(officeNum);
-            });
-    }
-    if (role === "Engineer") {
-        inquirer.prompt([
-            {
-                type: "input",
-                message: "Enter a the Engineer's GitHub UserName.",
-                name: "gitHubName",
-            }]).then(function (data) {
-                gitHubName = data.gitHubName;
-                emp = new Engineer(name, id, email, gitHubName);
-                console.log(gitHubName);
-            });
-    }
-})
+runApp();
+function runApp() {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Enter your Employee's name.",
+            name: "name",
+        },
+        {
+            type: "input",
+            message: "Enter the Employee's ID Number.",
+            name: "id",
+        },
+        {
+            type: "input",
+            message: "Enter your employee's email.",
+            name: "email",
+        },
+        {
+            type: "list",
+            message: "Select the Employee's Proper Title",
+            name: "role",
+            choices: [
+                "Manager",
+                "Engineer",
+                "Intern",
+            ]
+        },
+    ]).then(function (data) {
+        console.log(data);
+        const name = data.name;
+        const nameNoSpace = name.split(".").join(" ");
+        const id = data.id;
+        const email = data.email;
+        const role = data.role;
+        console.log(data.role);
 
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+        if (role === "Intern") {
+            inquirer.prompt([
+                {
+                    type: "input",
+                    message: "Enter the name of the School that the Intern Attends.",
+                    name: "school",
+                }]).then(function (data) {
+                    school = data.school;
+                    emp = new Intern(name, id, email, school);
+                    console.log(emp);
+
+                    //push to array
+                    teamArray.push(emp);
+                    addAnotherPerson();
+                });
+        }
+        if (role === "Manager") {
+            inquirer.prompt([
+                {
+                    type: "input",
+                    message: "Enter the Manager's Office Number.",
+                    name: "officeNum",
+                }]).then(function (data) {
+                    officeNum = data.officeNum;
+                    emp = new Manager(name, id, email, officeNum);
+                    console.log(emp);
+
+                    //push to array
+                    teamArray.push(emp);
+                    addAnotherPerson();
+                });
+        }
+        if (role === "Engineer") {
+            inquirer.prompt([
+                {
+                    type: "input",
+                    message: "Enter a the Engineer's GitHub UserName.",
+                    name: "gitHubName",
+                }]).then(function (data) {
+                    gitHubName = data.gitHubName;
+                    emp = new Engineer(name, id, email, gitHubName);
+                    console.log(emp);
+
+                    //push to array
+                    teamArray.push(emp);
+                    addAnotherPerson()
+                });
+        }
+    });
+}
+
+
+function addAnotherPerson() {
+    inquirer.prompt([{
+        type: "confirm",
+        message: "Would you like to add another employee to your team?",
+        name: "addAnother",
+    }]).then(function (res) {
+        console.log(res);
+        if (res.addAnother === true) {
+            runApp();
+        } else {
+
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+
 
 
 // After the user has input all employees desired, call the `render` function (required
