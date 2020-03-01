@@ -112,9 +112,17 @@ function addAnotherPerson() {
         if (res.addAnother === true) {
             runApp();
         } else {
+            const outputPath = render(teamArray);
+            fs.writeFile('./output/team.html', outputPath, function (err) {
 
+                if (err) {
+                    return console.log(err);
+                }
+
+                console.log("Success!");
+            });
         }
-    })
+    });
 }
 
 
@@ -138,9 +146,6 @@ function addAnotherPerson() {
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
 
 // HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
 // and Intern classes should all extend from a class named Employee; see the directions
