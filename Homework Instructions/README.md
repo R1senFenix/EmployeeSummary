@@ -71,11 +71,11 @@ app.js         // Runs the application
 
 ## Minimum Requirements
 
-- Functional application.
+- Functional application.`done`
 
 - GitHub repository with a unique name and a README describing the project.
 
-- User can use the CLI to generate an HTML page that displays information about their team.
+- User can use the CLI to generate an HTML page that displays information about their team.`done`
 
 - All tests must pass. `done`
 
